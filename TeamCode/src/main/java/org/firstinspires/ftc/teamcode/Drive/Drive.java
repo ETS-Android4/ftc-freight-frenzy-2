@@ -27,7 +27,9 @@ public class Drive extends LinearOpMode {
         frontRight = hardwareMap.dcMotor.get("frontRight");
         rightArm = hardwareMap.dcMotor.get("rightArm");
         leftArm = hardwareMap.dcMotor.get("leftArm");
-        clawServo=hardwareMap.servo.get("clawServo");
+        clawServo = hardwareMap.servo.get("clawServo");
+
+        boolean holdingX = false;
 
         waitForStart();
         while (opModeIsActive()){
@@ -44,14 +46,19 @@ public class Drive extends LinearOpMode {
             leftArm.setDirection(DcMotor.Direction.REVERSE);
             leftArm.setPower(upDown);
 
-            if (gamepad2.x){
-                clawServo.setPosition(1);
+            if (gamepad2.x) {
+                if (!holdingX) {
+                    if (clawServo.getPosition() == 0.25) {
+                        clawServo.setPosition(0);
+                    } else {
+                        clawServo.setPosition(0.25);
+                    }
+                }
+                holdingX = true;
                 //right bumber = fast arm raise
+            } else {
+                holdingX = false;
             }
-            else {
-                clawServo.setPosition(0.5);
-            }
-
         }
 
     }
