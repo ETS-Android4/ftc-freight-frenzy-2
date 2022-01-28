@@ -35,13 +35,13 @@ public class Drive extends LinearOpMode {
         while (opModeIsActive()){
             double leftX = 0.7 * gamepad1.left_stick_x;
             double rightX = 0.7 * gamepad1.right_stick_x;
-            double rightY = 0.7 * gamepad1.right_stick_y;
+            double leftY = 0.7 * gamepad1.left_stick_y;
             double upDown = 0.4 * gamepad2.left_stick_y;
 
-            backLeft.setPower(rightX - rightY - leftX);
-            backRight.setPower(rightX + rightY - leftX);
-            frontLeft.setPower(-rightX + rightY - leftX);
-            frontRight.setPower(-rightX - rightY - leftX);
+            backLeft.setPower(leftX - leftY - rightX);
+            backRight.setPower(leftX + leftY - rightX);
+            frontLeft.setPower(-leftX + leftY - rightX);
+            frontRight.setPower(-leftX - leftY - rightX);
             rightArm.setPower(upDown);
             leftArm.setDirection(DcMotor.Direction.REVERSE);
             leftArm.setPower(upDown);
