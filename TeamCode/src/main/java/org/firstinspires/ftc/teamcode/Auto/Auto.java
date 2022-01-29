@@ -4,9 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="Autonomous", group="none")
 public class Auto extends LinearOpMode {
+    private ElapsedTime     runtime = new ElapsedTime();
+
     static DcMotor backRight;
     static DcMotor frontLeft;
     static DcMotor frontRight;
@@ -26,5 +29,15 @@ public class Auto extends LinearOpMode {
         clawServo = hardwareMap.servo.get("clawServo");
 
         waitForStart();
+
+        backLeft.setPower(1.0);
+        backRight.setPower(-1.0);
+        frontLeft.setPower(-1.0);
+        frontRight.setPower(1.0);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 2.0)) {
+            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
     }
 }
